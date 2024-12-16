@@ -1,130 +1,42 @@
-import React, { useState } from 'react';
-import { Text, TouchableOpacity, TextInput, StyleSheet, ScrollView, View, Image } from 'react-native';
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Home from "./pages/Home";
+import Stopwatch from "./pages/Stopwatch";
+import ToDoList from "./pages/ToDoList";
 
-const LoginPage = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = () => {
-    console.log('Login button pressed');
-    console.log('Email:', email);
-    console.log('Password:', password);
-    navigation.navigate('Home');
-  };
-
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require('./logo.png')} />
-      </View>
-
-      <Text style={styles.title}>Sign In</Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        placeholderTextColor={"#F0F3F4"}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-      
-
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        placeholderTextColor={"#F0F3F4"}
-        secureTextEntry
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-      />
-
-      <TouchableOpacity onPress={() => navigation.navigate('AccountRecovery')}>
-        <Text style={styles.linkText}>Can't Sign In?</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.buttonContainer} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Sign In</Text>
-      </TouchableOpacity>
-
-      <View style={styles.linkContainer}>
-        <Text style={styles.Text}>Don't have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Registration')}>
-          <Text style={styles.link}>Sign up</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  );
-};
-
-// Main App function
+const Stack = createStackNavigator();
 export default function App() {
-  return <LoginPage navigation={{ navigate: () => console.log('Navigating...') }} />;
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stopwatch"
+          component={Stopwatch}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ToDoList"
+          component={ToDoList}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#262626',
-  },
-  logoContainer: {
-    marginBottom: 16,
-    alignItems: 'center',
-  },
-  logo: {
-    width: 100,
-    height: 120,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    color: '#F0F3F4',
-  },
-  input: {
-    width: '80%',
-    height: 45,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    borderColor: '#373636',
-    color: '#F0F3F4',
-  },
-  buttonContainer: {
-    width: '80%',
-    backgroundColor: '#373636',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 16,
-    borderRadius: 8,
-    overflow: 'hidden',
-  },
-  buttonText: {
-    color: '#F3BB5F',
-    padding: 10,
-    fontSize: 17,
-  },
-  linkContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 10,
-  },
-  linkText: {
-    color: '#F3BB5F',
-    marginBottom: 20,
-    marginTop: -12,
-    marginLeft: 170,
-  },
-  link: {
-    color: '#F3BB5F',
-  },
-  Text: {
-    color: '#F0F3F4',
-  },
-});
