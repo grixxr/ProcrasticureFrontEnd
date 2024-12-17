@@ -26,7 +26,7 @@ export const Login = async (credentials) => {
     return { success: true, response: response.data, email: credentials.email };
   } catch (error) {
     // If there's an error, capture the error details
-    let errorMessage = "An error occurred during login";
+    let errorMessage = "Incorrect Details";
 
     if (error.response) {
       // Axios error response from the server
@@ -144,7 +144,7 @@ export const editTask = async (method, newTaskData) => {
       });
   } else if ((method = "put")) {
     await axios
-      .put(ADDRESS + `tasks/editTask/${newTaskData.id}`, newTaskData, {
+      .put(ADDRESS + `tasks/editTask/${newTaskData.id}/`, newTaskData, {
         headers: {
           "Content-Type": "application/JSON",
           "Referrer-Policy": "same-origin",
@@ -162,7 +162,7 @@ export const editTask = async (method, newTaskData) => {
 
 export const getMyTasksList = async (email) => {
   await axios
-    .get(ADDRESS + `tasks/getmytask/${email}`, "", {
+    .get(ADDRESS + `tasks/getmytask/${email}/`, "", {
       headers: {
         "Content-Type": "application/JSON",
         "Referrer-Policy": "same-origin",
@@ -227,7 +227,7 @@ export const editTimedTasks = async (method, editedTimedTasks) => {
   if (method == "get") {
     await axios
       .get(
-        ADDRESS + `timedtasks/editTimeTask/${editedTimedTasks.id}`,
+        ADDRESS + `timedtasks/editTimeTask/${editedTimedTasks.id}/`,
         editedTimedTasks,
         {
           headers: {
@@ -246,7 +246,7 @@ export const editTimedTasks = async (method, editedTimedTasks) => {
   } else if (method == "put") {
     await axios
       .put(
-        ADDRESS + `timedtasks/editTimeTask/${editedTimedTasks.id}`,
+        ADDRESS + `timedtasks/editTimeTask/${editedTimedTasks.id}/`,
         editedTimedTasks,
         {
           headers: {
@@ -267,7 +267,7 @@ export const editTimedTasks = async (method, editedTimedTasks) => {
 
 export const getTimedTasksHistory = async (email) => {
   await axios
-    .get(ADDRESS + `timedtasks/getTimedTaskHistory/${email}`, "", {
+    .get(ADDRESS + `timedtasks/getTimedTaskHistory/${email}/`, "", {
       headers: {
         "Content-Type": "application/JSON",
         "Referrer-Policy": "same-origin",
