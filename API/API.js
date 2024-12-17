@@ -12,7 +12,7 @@ export const Login = async (credentials) => {
         {"password": "",
         "email": ""}
     */
-    await axios.post(ADDRESS+"auth/token/login", credentials, {
+    await axios.post(ADDRESS+"auth/token/login/", credentials, {
         headers:{
           'Content-Type': 'application/JSON',
           'Referrer-Policy': 'same-origin',
@@ -45,7 +45,7 @@ export const Register = async(registrationData) => {
 
     */
 
-    await axios.post(ADDRESS+"auth/users", registrationData, {
+    await axios.post(ADDRESS+"auth/users/", registrationData, {
         headers: {
           'Content-Type': 'application/JSON',
           'Referrer-Policy': 'same-origin',
@@ -72,7 +72,7 @@ export const createTask = async (task) => {
     "task_owner": null,     //email
     }    
     */
-    await axios.post(ADDRESS+"tasks/createTask", task, {
+    await axios.post(ADDRESS+"tasks/createTask/", task, {
         headers:{
           'Content-Type': 'application/JSON',
           'Referrer-Policy': 'same-origin',
@@ -103,7 +103,7 @@ export const editTask = async (method, newTaskData) => {
     */
 
     if (method = "get") {
-        await axios.get(ADDRESS+"tasks/editTask/"+taskID, "", {
+        await axios.get(ADDRESS+`tasks/editTask/${newTaskData.id}/`, "", {
             headers: {
                 'Content-Type': 'application/JSON',
                 'Referrer-Policy': 'same-origin',
@@ -115,7 +115,7 @@ export const editTask = async (method, newTaskData) => {
             return error
         })
     } else if (method = "put") {
-        await axios.put(ADDRESS+"tasks/editTask/"+newTaskData.id, newTaskData, {
+        await axios.put(ADDRESS+`tasks/editTask/${newTaskData.id}`, newTaskData, {
             headers:{
                 'Content-Type': 'application/JSON',
                 'Referrer-Policy': 'same-origin',
@@ -130,7 +130,7 @@ export const editTask = async (method, newTaskData) => {
 }
 
 export const getMyTasksList = async (email) => {
-    await axios.get(ADDRESS+'tasks/getmytask/'+email, "",{
+    await axios.get(ADDRESS+`tasks/getmytask/${email}`, "",{
         headers:{
             'Content-Type': 'application/JSON',
             'Referrer-Policy': 'same-origin',
@@ -188,7 +188,7 @@ export const editTimedTasks = async(method, editedTimedTasks) => {
     */
 
     if (method == "get") {
-        await axios.get(ADDRESS+"timedtasks/editTimeTask/"+editedTimedTasks.id, editedTimedTasks, {
+        await axios.get(ADDRESS+`timedtasks/editTimeTask/${editedTimedTasks.id}`, editedTimedTasks, {
             headers: {
                 'Content-Type': 'application/JSON',
                 'Referrer-Policy': 'same-origin',
@@ -200,7 +200,7 @@ export const editTimedTasks = async(method, editedTimedTasks) => {
             return error
         })
     } else if(method == "put") {
-        await axios.put(ADDRESS+"timedtasks/editTimeTask/"+editedTimedTasks.id, editedTimedTasks, {
+        await axios.put(ADDRESS+`timedtasks/editTimeTask/${editedTimedTasks.id}`, editedTimedTasks, {
             headers:{
                 'Content-Type': 'application/JSON',
                 'Referrer-Policy': 'same-origin',
@@ -216,8 +216,8 @@ export const editTimedTasks = async(method, editedTimedTasks) => {
 
 export const getTimedTasksHistory = async(email) => {
 
-    
-    await axios.get(ADDRESS+"timedtasks/getTimedTaskHistory/"+email, "", {
+
+    await axios.get(ADDRESS+`timedtasks/getTimedTaskHistory/${email}`, "", {
         headers:{
             'Content-Type': 'application/JSON',
             'Referrer-Policy': 'same-origin',

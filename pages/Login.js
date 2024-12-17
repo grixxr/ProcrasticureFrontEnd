@@ -27,6 +27,19 @@ const LoginPage = ({}) => {
     navigation.navigate("Register");
   };
 
+
+  const [regData, setRegData] = useState({
+    "email": "",
+    "password": "",
+    "confirm_password": ""
+  })
+
+  const handleSet = (key, value) => {
+    setRegData(prevState => ({
+      ...prevState,
+      [key]: value
+    }))
+  }
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.logoContainer}></View>
@@ -50,8 +63,8 @@ const LoginPage = ({}) => {
         placeholderTextColor={"#F0F3F4"}
         keyboardType="email-address"
         autoCapitalize="none"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
+        value={regData.email}
+        onChangeText={(e)=>handleSet("email", e.target.value)}
       />
 
       <TextInput
