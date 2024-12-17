@@ -1,33 +1,34 @@
 import axios from "axios";
 
-IPADDRESS="http://127.0.0.1:8000"
-ADDRESS = IPADDRESS+"/ProCure/v1/"
+IPADDRESS = "http://192.168.1.22:8000";
+ADDRESS = IPADDRESS + "/ProCure/v1/";
 
 //API handlers
 export const Login = async (credentials) => {
-
-    /*
+  /*
         JSON format for credentials
 
         {"password": "",
         "email": ""}
     */
-    await axios.post(ADDRESS+"auth/token/login", credentials, {
-        headers:{
-          'Content-Type': 'application/JSON',
-          'Referrer-Policy': 'same-origin',
-          'Cross-Origin-Opener-Policy': 'same-origin'
-        }
-    }).then(response=>{
-        return {'response': response, 'credentials': credentials.email}
-    }).catch(error=>{
-        return error
+  await axios
+    .post(ADDRESS + "auth/token/login", credentials, {
+      headers: {
+        "Content-Type": "application/JSON",
+        "Referrer-Policy": "same-origin",
+        "Cross-Origin-Opener-Policy": "same-origin",
+      },
     })
-}
+    .then((response) => {
+      return { response: response, credentials: credentials.email };
+    })
+    .catch((error) => {
+      return error;
+    });
+};
 
-export const Register = async(registrationData) => {
-
-    /*
+export const Register = async (registrationData) => {
+  /*
 
         JSON Format for Registration Data
 
@@ -45,22 +46,24 @@ export const Register = async(registrationData) => {
 
     */
 
-    await axios.post(ADDRESS+"auth/users", registrationData, {
-        headers: {
-          'Content-Type': 'application/JSON',
-          'Referrer-Policy': 'same-origin',
-          'Cross-Origin-Opener-Policy': 'same-origin'
-        }
-    }).then(response=>{
-        return response
-    }).catch(error=>{
-        return error
+  await axios
+    .post(ADDRESS + "auth/users/", registrationData, {
+      headers: {
+        "Content-Type": "application/JSON",
+        "Referrer-Policy": "same-origin",
+        "Cross-Origin-Opener-Policy": "same-origin",
+      },
     })
-}
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
 
 export const createTask = async (task) => {
-
-    /*
+  /*
     JSON format for task
 
     {
@@ -72,21 +75,24 @@ export const createTask = async (task) => {
     "task_owner": null,     //email
     }    
     */
-    await axios.post(ADDRESS+"tasks/createTask", task, {
-        headers:{
-          'Content-Type': 'application/JSON',
-          'Referrer-Policy': 'same-origin',
-          'Cross-Origin-Opener-Policy': 'same-origin'
-        }
-    }).then(response => {
-        return response
-    }).catch(error=>{
-        return error
+  await axios
+    .post(ADDRESS + "tasks/createTask", task, {
+      headers: {
+        "Content-Type": "application/JSON",
+        "Referrer-Policy": "same-origin",
+        "Cross-Origin-Opener-Policy": "same-origin",
+      },
     })
-}
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
 
 export const editTask = async (method, newTaskData) => {
-    /*
+  /*
     method --> required field to handle both the data get and data put in a single function
             -> "get" or "put"
 
@@ -102,49 +108,58 @@ export const editTask = async (method, newTaskData) => {
     }   
     */
 
-    if (method = "get") {
-        await axios.get(ADDRESS+"tasks/editTask/"+taskID, "", {
-            headers: {
-                'Content-Type': 'application/JSON',
-                'Referrer-Policy': 'same-origin',
-                'Cross-Origin-Opener-Policy': 'same-origin'
-            }
-        }).then(response => {
-            return response
-        }).catch(error=> {
-            return error
-        })
-    } else if (method = "put") {
-        await axios.put(ADDRESS+"tasks/editTask/"+newTaskData.id, newTaskData, {
-            headers:{
-                'Content-Type': 'application/JSON',
-                'Referrer-Policy': 'same-origin',
-                'Cross-Origin-Opener-Policy': 'same-origin'
-            }
-        }).then(response=>{
-            return response
-        }).catch(error=> {
-            return error
-        })
-    }
-}
+  if ((method = "get")) {
+    await axios
+      .get(ADDRESS + "tasks/editTask/" + taskID, "", {
+        headers: {
+          "Content-Type": "application/JSON",
+          "Referrer-Policy": "same-origin",
+          "Cross-Origin-Opener-Policy": "same-origin",
+        },
+      })
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+  } else if ((method = "put")) {
+    await axios
+      .put(ADDRESS + "tasks/editTask/" + newTaskData.id, newTaskData, {
+        headers: {
+          "Content-Type": "application/JSON",
+          "Referrer-Policy": "same-origin",
+          "Cross-Origin-Opener-Policy": "same-origin",
+        },
+      })
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+  }
+};
 
 export const getMyTasksList = async (email) => {
-    await axios.get(ADDRESS+'tasks/getmytask/'+email, "",{
-        headers:{
-            'Content-Type': 'application/JSON',
-            'Referrer-Policy': 'same-origin',
-            'Cross-Origin-Opener-Policy': 'same-origin'
-        }
-    }).then(response => {
-        return response
-    }).catch(error => {
-        return error
+  await axios
+    .get(ADDRESS + "tasks/getmytask/" + email, "", {
+      headers: {
+        "Content-Type": "application/JSON",
+        "Referrer-Policy": "same-origin",
+        "Cross-Origin-Opener-Policy": "same-origin",
+      },
     })
-}
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
 
 export const createTimedTasks = async (timedtasks) => {
-    /*
+  /*
     JSON format for timedtasks
 
     {
@@ -157,21 +172,24 @@ export const createTimedTasks = async (timedtasks) => {
     }
     */
 
-    await axios.post(ADDRESS+'timedtasks/createTimedTask/', timedtasks, {
-        headers: {
-            'Content-Type': 'application/JSON',
-            'Referrer-Policy': 'same-origin',
-            'Cross-Origin-Opener-Policy': 'same-origin'
-        }
-    }).then(response => {
-        return response
-    }).catch(error=> {
-        return error
+  await axios
+    .post(ADDRESS + "timedtasks/createTimedTask/", timedtasks, {
+      headers: {
+        "Content-Type": "application/JSON",
+        "Referrer-Policy": "same-origin",
+        "Cross-Origin-Opener-Policy": "same-origin",
+      },
     })
-}
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
 
-export const editTimedTasks = async(method, editedTimedTasks) => {
-    /*
+export const editTimedTasks = async (method, editedTimedTasks) => {
+  /*
     method --> required field to handle both the data get and data put in a single function
             -> "get" or "put"
 
@@ -187,45 +205,60 @@ export const editTimedTasks = async(method, editedTimedTasks) => {
     }
     */
 
-    if (method == "get") {
-        await axios.get(ADDRESS+"timedtasks/editTimeTask/"+editedTimedTasks.id, editedTimedTasks, {
-            headers: {
-                'Content-Type': 'application/JSON',
-                'Referrer-Policy': 'same-origin',
-                'Cross-Origin-Opener-Policy': 'same-origin'
-            }
-        }).then(response=>{
-            return response
-        }).catch(error => {
-            return error
-        })
-    } else if(method == "put") {
-        await axios.put(ADDRESS+"timedtasks/editTimeTask/"+editedTimedTasks.id, editedTimedTasks, {
-            headers:{
-                'Content-Type': 'application/JSON',
-                'Referrer-Policy': 'same-origin',
-                'Cross-Origin-Opener-Policy': 'same-origin'
-            }
-        }).then(response=> {
-            return response
-        }).catch(error=>{
-            return error
-        })
-    }
-}
-
-export const getTimedTasksHistory = async(email) => {
-
-    
-    await axios.get(ADDRESS+"timedtasks/getTimedTaskHistory/"+email, "", {
-        headers:{
-            'Content-Type': 'application/JSON',
-            'Referrer-Policy': 'same-origin',
-            'Cross-Origin-Opener-Policy': 'same-origin'
+  if (method == "get") {
+    await axios
+      .get(
+        ADDRESS + "timedtasks/editTimeTask/" + editedTimedTasks.id,
+        editedTimedTasks,
+        {
+          headers: {
+            "Content-Type": "application/JSON",
+            "Referrer-Policy": "same-origin",
+            "Cross-Origin-Opener-Policy": "same-origin",
+          },
         }
-    }).then(response=> {
-        return response
-    }).catch(error=> {
-        return error
+      )
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+  } else if (method == "put") {
+    await axios
+      .put(
+        ADDRESS + "timedtasks/editTimeTask/" + editedTimedTasks.id,
+        editedTimedTasks,
+        {
+          headers: {
+            "Content-Type": "application/JSON",
+            "Referrer-Policy": "same-origin",
+            "Cross-Origin-Opener-Policy": "same-origin",
+          },
+        }
+      )
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+  }
+};
+
+export const getTimedTasksHistory = async (email) => {
+  await axios
+    .get(ADDRESS + "timedtasks/getTimedTaskHistory/" + email, "", {
+      headers: {
+        "Content-Type": "application/JSON",
+        "Referrer-Policy": "same-origin",
+        "Cross-Origin-Opener-Policy": "same-origin",
+      },
     })
-}
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
