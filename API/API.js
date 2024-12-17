@@ -6,25 +6,44 @@ ADDRESS = IPADDRESS + "/ProCure/v1/";
 //API handlers
 export const Login = async (credentials) => {
   /*
-        JSON format for credentials
-
-        {"password": "",
-        "email": ""}
+          JSON format for credentials
+          {"password": "", "email": ""}
     */
-  await axios
-    .post(ADDRESS + "auth/token/login", credentials, {
-      headers: {
-        "Content-Type": "application/JSON",
-        "Referrer-Policy": "same-origin",
-        "Cross-Origin-Opener-Policy": "same-origin",
-      },
-    })
-    .then((response) => {
-      return { response: response, credentials: credentials.email };
-    })
-    .catch((error) => {
-      return error;
-    });
+  try {
+    const response = await axios.post(
+      ADDRESS + "auth/token/login/",
+      credentials,
+      {
+        headers: {
+          "Content-Type": "application/JSON",
+          "Referrer-Policy": "same-origin",
+          "Cross-Origin-Opener-Policy": "same-origin",
+        },
+      }
+    );
+
+    // If the response is successful, return the response and the credentials' email
+    return { success: true, response: response.data, email: credentials.email };
+  } catch (error) {
+    // If there's an error, capture the error details
+    let errorMessage = "An error occurred during login";
+
+    if (error.response) {
+      // Axios error response from the server
+      errorMessage =
+        error.response.data?.detail ||
+        error.response.data?.message ||
+        errorMessage;
+    } else if (error.request) {
+      // No response received from the server
+      errorMessage = "No response from the server. Please try again later.";
+    } else {
+      // Other unknown errors
+      errorMessage = error.message || errorMessage;
+    }
+
+    return { success: false, error: errorMessage };
+  }
 };
 
 export const Register = async (registrationData) => {
@@ -76,7 +95,7 @@ export const createTask = async (task) => {
     }    
     */
   await axios
-    .post(ADDRESS + "tasks/createTask", task, {
+    .post(ADDRESS + "tasks/createTask/", task, {
       headers: {
         "Content-Type": "application/JSON",
         "Referrer-Policy": "same-origin",
@@ -110,7 +129,7 @@ export const editTask = async (method, newTaskData) => {
 
   if ((method = "get")) {
     await axios
-      .get(ADDRESS + "tasks/editTask/" + taskID, "", {
+      .get(ADDRESS + `tasks/editTask/${newTaskData.id}/`, "", {
         headers: {
           "Content-Type": "application/JSON",
           "Referrer-Policy": "same-origin",
@@ -125,7 +144,7 @@ export const editTask = async (method, newTaskData) => {
       });
   } else if ((method = "put")) {
     await axios
-      .put(ADDRESS + "tasks/editTask/" + newTaskData.id, newTaskData, {
+      .put(ADDRESS + `tasks/editTask/${newTaskData.id}`, newTaskData, {
         headers: {
           "Content-Type": "application/JSON",
           "Referrer-Policy": "same-origin",
@@ -143,7 +162,7 @@ export const editTask = async (method, newTaskData) => {
 
 export const getMyTasksList = async (email) => {
   await axios
-    .get(ADDRESS + "tasks/getmytask/" + email, "", {
+    .get(ADDRESS + `tasks/getmytask/${email}`, "", {
       headers: {
         "Content-Type": "application/JSON",
         "Referrer-Policy": "same-origin",
@@ -208,7 +227,7 @@ export const editTimedTasks = async (method, editedTimedTasks) => {
   if (method == "get") {
     await axios
       .get(
-        ADDRESS + "timedtasks/editTimeTask/" + editedTimedTasks.id,
+        ADDRESS + `timedtasks/editTimeTask/${editedTimedTasks.id}`,
         editedTimedTasks,
         {
           headers: {
@@ -227,7 +246,7 @@ export const editTimedTasks = async (method, editedTimedTasks) => {
   } else if (method == "put") {
     await axios
       .put(
-        ADDRESS + "timedtasks/editTimeTask/" + editedTimedTasks.id,
+        ADDRESS + `timedtasks/editTimeTask/${editedTimedTasks.id}`,
         editedTimedTasks,
         {
           headers: {
@@ -248,7 +267,7 @@ export const editTimedTasks = async (method, editedTimedTasks) => {
 
 export const getTimedTasksHistory = async (email) => {
   await axios
-    .get(ADDRESS + "timedtasks/getTimedTaskHistory/" + email, "", {
+    .get(ADDRESS + `timedtasks/getTimedTaskHistory/${email}`, "", {
       headers: {
         "Content-Type": "application/JSON",
         "Referrer-Policy": "same-origin",
